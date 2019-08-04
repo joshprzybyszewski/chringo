@@ -102,8 +102,9 @@ class _BingoCardState extends State {
         color: _isChecked ? Colors.green : Colors.white,
         child: Center(
           child: Text(
-            'Item $index',
+            'Item $index: here is some more text',
             style: Theme.of(context).textTheme.subtitle,
+            textAlign: TextAlign.center,
           ),
         ),
       ),
