@@ -91,12 +91,14 @@ class BingoCard extends StatefulWidget {
 }
 
 class _BingoCardState extends State {
+  bool _isChecked = false;
   _BingoCardState();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Card(
+        color: _isChecked ? Colors.green : Colors.white,
         child: Center(
           child: Text(
             'Item',
@@ -104,8 +106,12 @@ class _BingoCardState extends State {
           ),
         ),
       ),
-      onTap: () => print("hello"),
+      onTap: _toggleChecked,
     );
+  }
+
+  void _toggleChecked() {
+    setState(() => _isChecked = !_isChecked);
   }
 }
 
