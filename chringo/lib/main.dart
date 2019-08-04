@@ -87,12 +87,13 @@ class BingoCard extends StatefulWidget {
   BingoCard(this.index);
 
   @override
-  _BingoCardState createState() => _BingoCardState();
+  _BingoCardState createState() => _BingoCardState(index);
 }
 
 class _BingoCardState extends State {
   bool _isChecked = false;
-  _BingoCardState();
+  final int index;
+  _BingoCardState(this.index);
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +102,7 @@ class _BingoCardState extends State {
         color: _isChecked ? Colors.green : Colors.white,
         child: Center(
           child: Text(
-            'Item',
+            'Item $index',
             style: Theme.of(context).textTheme.subtitle,
           ),
         ),
