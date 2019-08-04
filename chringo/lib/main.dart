@@ -49,12 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
       crossAxisCount: 5,
       // Generate 100 widgets that display their index in the List.
       children: List.generate(25, (index) {
-        return Card(
-          child: Text(
-            'Item $index',
-            style: Theme.of(context).textTheme.subtitle,
-          ),
-        );
+        return new BingoCard(index);
       }),
     );
   }
@@ -83,6 +78,33 @@ class _MyHomePageState extends State<MyHomePage> {
           onTap: () => print(record),
         ),
       ),
+    );
+  }
+}
+
+class BingoCard extends StatefulWidget {
+  final int index;
+  BingoCard(this.index);
+
+  @override
+  _BingoCardState createState() => _BingoCardState();
+}
+
+class _BingoCardState extends State {
+  _BingoCardState();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Card(
+        child: Center(
+          child: Text(
+            'Item',
+            style: Theme.of(context).textTheme.subtitle,
+          ),
+        ),
+      ),
+      onTap: () => print("hello"),
     );
   }
 }
