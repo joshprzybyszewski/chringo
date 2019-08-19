@@ -39,62 +39,44 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildBody(BuildContext context) {
-    // TODO: get actual snapshot from Cloud Firestore
-    return _buildGrid(context);
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('wordbanks').snapshots(),
+      builder: (context, snapshot) {
+        Record wordsRecord;
+        if (snapshot.hasData) {
+          wordsRecord = Record.fromSnapshot(snapshot.data.documents.first);
+        }
+
+        return _buildGrid(context, wordsRecord.words);
+      },
+    );
   }
 
-  Widget _buildGrid(BuildContext context) {
+  Widget _buildGrid(BuildContext context, List<String> words) {
     return GridView.count(
       // Create a grid with 2 columns. If you change the scrollDirection to
       // horizontal, this produces 2 rows.
       crossAxisCount: 5,
       // Generate 100 widgets that display their index in the List.
       children: List.generate(25, (index) {
-        return new BingoCard(index);
+        return new BingoCard(words[index]);
       }),
-    );
-  }
-
-  Widget _buildList(BuildContext context, List<Map> snapshot) {
-    return ListView(
-      padding: const EdgeInsets.only(top: 20.0),
-      children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-    );
-  }
-
-  Widget _buildListItem(BuildContext context, Map data) {
-    final record = Record.fromMap(data);
-
-    return Padding(
-      key: ValueKey(record.name),
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        child: ListTile(
-          title: Text(record.name),
-          trailing: Text(record.votes.toString()),
-          onTap: () => print(record),
-        ),
-      ),
     );
   }
 }
 
 class BingoCard extends StatefulWidget {
-  final int index;
-  BingoCard(this.index);
+  final String word;
+  BingoCard(this.word);
 
   @override
-  _BingoCardState createState() => _BingoCardState(index);
+  _BingoCardState createState() => _BingoCardState(word);
 }
 
 class _BingoCardState extends State {
   bool _isChecked = false;
-  final int index;
-  _BingoCardState(this.index);
+  final String word;
+  _BingoCardState(this.word);
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +85,7 @@ class _BingoCardState extends State {
         color: _isChecked ? Colors.green : Colors.white,
         child: Center(
           child: Text(
-            'Item $index: here is some more text',
+            word,
             style: Theme.of(context).textTheme.subtitle,
             textAlign: TextAlign.center,
           ),
@@ -119,19 +101,16 @@ class _BingoCardState extends State {
 }
 
 class Record {
-  final String name;
-  final int votes;
+  final List<String> words;
   final DocumentReference reference;
 
   Record.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['name'] != null),
-        assert(map['votes'] != null),
-        name = map['name'],
-        votes = map['votes'];
+      : assert(map['words'] != null),
+        words = List<String>.from(map['words']);
 
   Record.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
 
   @override
-  String toString() => "Record<$name:$votes>";
+  String toString() => "Record<$words>";
 }
