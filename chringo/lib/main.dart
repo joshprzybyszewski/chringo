@@ -54,10 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildGrid(BuildContext context, List<String> words) {
     return GridView.count(
-      // Create a grid with 2 columns. If you change the scrollDirection to
-      // horizontal, this produces 2 rows.
+      // Create a 5x5 bingo grid
       crossAxisCount: 5,
-      // Generate 100 widgets that display their index in the List.
+      // Generate 25 bingo squares
       children: List.generate(25, (index) {
         return new BingoCard(words[index]);
       }),
