@@ -11,3 +11,10 @@ pubspec.lock
 # Directory created by dartdoc
 # If you don't generate documentation locally you can remove this line.
 doc/api/
+
+# Generated android files
+chringo/android/.gradle
+chringo/android/local.properties
+
+# Generated ios files
+chringo/ios/Runner
