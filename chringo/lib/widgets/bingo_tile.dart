@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class BingoTile extends StatefulWidget {
@@ -19,10 +20,16 @@ class _BingoTileState extends State {
       child: Card(
         color: _isChecked ? Colors.green : Colors.white,
         child: Center(
-          child: Text(
-            word,
-            style: Theme.of(context).textTheme.subtitle,
-            textAlign: TextAlign.center,
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: AutoSizeText(
+              word,
+              style: Theme.of(context).textTheme.subtitle,
+              textAlign: TextAlign.center,
+              maxLines: 4,
+              wrapWords: false,
+              minFontSize: 8,
+            ),
           ),
         ),
       ),
