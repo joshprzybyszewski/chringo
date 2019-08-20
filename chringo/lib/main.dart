@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:chringo/records/wordbanks_record.dart';
+import 'package:chringo/widgets/bingo_grid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import 'widgets/bingo_tile.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,25 +38,11 @@ class _MyHomePageState extends State<MyHomePage> {
         WordbanksRecord wordsRecord;
         // TODO if no data, show error
         if (snapshot.hasData) {
-          wordsRecord = WordbanksRecord.fromSnapshot(snapshot.data.documents.first);
+          wordsRecord =
+              WordbanksRecord.fromSnapshot(snapshot.data.documents.first);
         }
-
-        return _buildGrid(context, wordsRecord.words);
+        return BingoGrid(wordsRecord.words);
       },
-    );
-  }
-
-  Widget _buildGrid(BuildContext context, List<String> words) {
-    var rand = Random();
-    var tiles = <BingoTile>[];
-    while(tiles.length < 25) {
-      tiles.add(BingoTile(words.removeAt(rand.nextInt(words.length))));
-    }
-    return GridView.count(
-      // Create a 5x5 bingo grid
-      crossAxisCount: 5,
-      // Generate 25 bingo squares
-      children: tiles,
     );
   }
 }
