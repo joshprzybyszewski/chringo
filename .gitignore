@@ -6,13 +6,13 @@
 .pub/
 build/
 # If you're building an application, you may want to check-in your pubspec.lock
-chringo/pubspec.lock
+pubspec.lock
 
 # Directory created by dartdoc
 # If you don't generate documentation locally you can remove this line.
 doc/api/
 
-chringo/.flutter-plugins
+.flutter-plugins
 
 # VS Code
 .vscode
@@ -20,7 +20,7 @@ chringo/.flutter-plugins
 # Android studio
 .idea
 *.iml
-chringo/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+GeneratedPluginRegistrant.*
 
 # Generated android files
 chringo/android/.gradle
