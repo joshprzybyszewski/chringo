@@ -1,3 +1,4 @@
+import 'package:chringo/records/wordbanks_record.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -35,10 +36,10 @@ class _MyHomePageState extends State<MyHomePage> {
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('wordbanks').snapshots(),
       builder: (context, snapshot) {
-        Record wordsRecord;
+        WordbanksRecord wordsRecord;
         // TODO if no data, show error
         if (snapshot.hasData) {
-          wordsRecord = Record.fromSnapshot(snapshot.data.documents.first);
+          wordsRecord = WordbanksRecord.fromSnapshot(snapshot.data.documents.first);
         }
 
         return _buildGrid(context, wordsRecord.words);
@@ -56,19 +57,4 @@ class _MyHomePageState extends State<MyHomePage> {
       }),
     );
   }
-}
-
-class Record {
-  final List<String> words;
-  final DocumentReference reference;
-
-  Record.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['words'] != null),
-        words = List<String>.from(map['words']);
-
-  Record.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data, reference: snapshot.reference);
-
-  @override
-  String toString() => "Record<$words>";
 }
