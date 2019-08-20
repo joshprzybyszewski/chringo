@@ -43,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
       stream: Firestore.instance.collection('wordbanks').snapshots(),
       builder: (context, snapshot) {
         Record wordsRecord;
+        // TODO if no data, show error
         if (snapshot.hasData) {
           wordsRecord = Record.fromSnapshot(snapshot.data.documents.first);
         }
