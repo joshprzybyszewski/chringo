@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:chringo/records/wordbanks_record.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -48,13 +50,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildGrid(BuildContext context, List<String> words) {
+    var rand = Random();
+    var tiles = <BingoTile>[];
+    while(tiles.length < 25) {
+      tiles.add(BingoTile(words.removeAt(rand.nextInt(words.length))));
+    }
     return GridView.count(
       // Create a 5x5 bingo grid
       crossAxisCount: 5,
       // Generate 25 bingo squares
-      children: List.generate(25, (index) {
-        return new BingoTile(words[index]);
-      }),
+      children: tiles,
     );
   }
 }
