@@ -59,24 +59,24 @@ class _MyHomePageState extends State<MyHomePage> {
       crossAxisCount: 5,
       // Generate 25 bingo squares
       children: List.generate(25, (index) {
-        return new BingoCard(words[index]);
+        return new BingoTile(words[index]);
       }),
     );
   }
 }
 
-class BingoCard extends StatefulWidget {
+class BingoTile extends StatefulWidget {
   final String word;
-  BingoCard(this.word);
+  BingoTile(this.word);
 
   @override
-  _BingoCardState createState() => _BingoCardState(word);
+  _BingoTileState createState() => _BingoTileState(word);
 }
 
-class _BingoCardState extends State {
+class _BingoTileState extends State {
   bool _isChecked = false;
   final String word;
-  _BingoCardState(this.word);
+  _BingoTileState(this.word);
 
   @override
   Widget build(BuildContext context) {
