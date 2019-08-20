@@ -4,7 +4,7 @@ import 'package:chringo/records/wordbanks_record.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'bingo_tile.dart';
+import 'widgets/bingo_tile.dart';
 
 void main() => runApp(MyApp());
 
