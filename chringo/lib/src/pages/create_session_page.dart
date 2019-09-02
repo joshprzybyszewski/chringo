@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CreateSessionPage extends StatelessWidget {
@@ -11,7 +12,7 @@ class CreateSessionPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            _WordbankDropdownButton(),
+            _WordbankChoice(),
             RaisedButton(
               onPressed: () {},
               child: Text("CREATE"),
@@ -23,27 +24,38 @@ class CreateSessionPage extends StatelessWidget {
   }
 }
 
-class _WordbankDropdownButton extends StatefulWidget {
+class _WordbankChoice extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _WordbankDropdownButtonState();
+  State<StatefulWidget> createState() => _WordbankChoiceState();
 }
 
-class _WordbankDropdownButtonState extends State {
-  String dropdownValue = 'One';
+class _WordbankChoiceState extends State {
+  String dropdownValue = '';
+  String bingoType = 'Standard';
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      onChanged: (String newValue) {
-        setState(() => dropdownValue = newValue);
-      },
-      items: <String>['One', 'Two'].map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
+    return StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance.collection('wordbanks').snapshots(),
+        builder: (context, snapshot) {
+          print('NUMBER OF DOCUMENTS: ${snapshot.data.documents.length}');
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Choose wordbank:'),
+              SizedBox(width: 20,),
+              !snapshot.hasData
+                  ? Text('No wordbanks...')
+                  : DropdownButton<String>(
+                      onChanged: (newValue) {
+                        setState(() => dropdownValue = newValue);
+                      },
+                      items: snapshot.data.documents.map((snapshot) {
+                        return DropdownMenuItem<String>(
+                          child: Text(snapshot.documentID),
+                        );
+                      }).toList()),
+            ],
+          );
+        });
   }
-
 }
