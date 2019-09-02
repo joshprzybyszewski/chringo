@@ -1,6 +1,8 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'bingo_tile.dart';
+
+import '../widgets/bingo_tile.dart';
 
 class BingoGrid extends StatelessWidget {
   final List<String> words;

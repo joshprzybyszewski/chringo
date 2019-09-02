@@ -1,7 +1,8 @@
-import 'package:chringo/records/wordbanks_record.dart';
-import 'package:chringo/widgets/bingo_grid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import '../records/wordbanks_record.dart';
+import '../widgets/bingo_grid.dart';
 
 class BingoPage extends StatelessWidget {
   @override

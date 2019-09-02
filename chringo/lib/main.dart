@@ -1,5 +1,6 @@
-import 'package:chringo/pages/bingo_page.dart';
 import 'package:flutter/material.dart';
+
+import 'src/pages/bingo_page.dart';
 
 void main() => runApp(MyApp());
 
