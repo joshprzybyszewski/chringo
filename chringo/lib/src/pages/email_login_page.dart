@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 
-class EmailLoginPage extends StatefulWidget {
+class EmailLoginPage extends StatelessWidget {
   static String tag = 'email-login-page';
-  @override
-  _EmailLoginPageState createState() => new _EmailLoginPageState();
-}
-
-class _EmailLoginPageState extends State<EmailLoginPage> {
+  
   @override
   Widget build(BuildContext context) {
     final email = TextFormField(
