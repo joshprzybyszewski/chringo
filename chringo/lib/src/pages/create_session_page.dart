@@ -9,25 +9,38 @@ class CreateSessionPage extends StatelessWidget {
         title: Text('CREATE SESSION'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _DropdownWithLabel(
-                'Choose bingo rules:', <String>['Standard', 'Blackout']),
-            StreamBuilder<QuerySnapshot>(
-                stream: Firestore.instance.collection('wordbanks').snapshots(),
-                builder: (context, snapshot) {
-                  return _DropdownWithLabel(
-                      'Choose wordbank:',
-                      snapshot.data.documents
-                          .map((snapshot) => snapshot.documentID)
-                          .toList());
-                }),
-            RaisedButton(
-              onPressed: () {},
-              child: Text("CREATE"),
-            )
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  _DropdownWithLabel(
+                      'Choose bingo rules:', <String>['Standard', 'Blackout']),
+                  StreamBuilder<QuerySnapshot>(
+                      stream: Firestore.instance.collection('wordbanks').snapshots(),
+                      builder: (context, snapshot) {
+                        return _DropdownWithLabel(
+                            'Choose wordbank:',
+                            snapshot.data.documents
+                                .map((snapshot) => snapshot.documentID)
+                                .toList());
+                      }),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  RaisedButton(
+                    onPressed: () {},
+                    child: Text("CREATE"),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -52,28 +65,25 @@ class _DropdownWithLabelState extends State {
   }
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(32.0, 0.0, 32.0, 0.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(label),
-          Container(
-            width: 150,
-            child: DropdownButton<String>(
-                value: selectedItem,
-                onChanged: (newValue) {
-                  setState(() => selectedItem = newValue);
-                },
-                items: dropdownItems.map((value) {
-                  return DropdownMenuItem(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList()),
-          )
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(label),
+        Container(
+          width: 150,
+          child: DropdownButton<String>(
+              value: selectedItem,
+              onChanged: (newValue) {
+                setState(() => selectedItem = newValue);
+              },
+              items: dropdownItems.map((value) {
+                return DropdownMenuItem(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList()),
+        )
+      ],
     );
   }
 }
