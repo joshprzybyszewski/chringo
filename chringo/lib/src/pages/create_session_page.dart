@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CreateSessionPage extends StatelessWidget {
+  final mockWordbankNames = <String>['Mock WB 1', 'Mock WB 2'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,13 +21,15 @@ class CreateSessionPage extends StatelessWidget {
                   _DropdownWithLabel(
                       'Choose bingo rules:', <String>['Standard', 'Blackout']),
                   StreamBuilder<QuerySnapshot>(
-                      stream: Firestore.instance.collection('wordbanks').snapshots(),
+                      stream: Firestore.instance
+                          .collection('wordbanks')
+                          .snapshots(),
                       builder: (context, snapshot) {
+                        print(
+                            "Number of documents: ${snapshot.data.documents.length}, ${snapshot.data.documents.first.documentID}");
                         return _DropdownWithLabel(
                             'Choose wordbank:',
-                            snapshot.data.documents
-                                .map((snapshot) => snapshot.documentID)
-                                .toList());
+                            mockWordbankNames);
                       }),
                 ],
               ),
