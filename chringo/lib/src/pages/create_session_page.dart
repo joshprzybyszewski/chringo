@@ -17,6 +17,7 @@ class CreateSessionPage extends StatelessWidget {
             children: <Widget>[
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                // TODO figure out how to pass the dropdown choices out
                 children: <Widget>[
                   _DropdownWithLabel(
                       'Choose bingo rules:', <String>['Standard', 'Blackout']),
