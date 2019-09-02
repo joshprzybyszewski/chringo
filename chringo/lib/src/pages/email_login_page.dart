@@ -220,7 +220,9 @@ class _EmailLinkSignInSectionState extends State<_EmailLinkSignInSection>
 
   Future<Uri> _retrieveDynamicLink() async {
     final PendingDynamicLinkData data =
-        await FirebaseDynamicLinks.instance.retrieveDynamicLink();
+        // await FirebaseDynamicLinks.instance.retrieveDynamicLink();
+        null; // Until we can sign our app, we are gonna just not use this
+        // see instructions here: https://firebase.google.com/docs/dynamic-links/android/receive#set-up-firebase-and-the-dynamic-links-sdk
     return data?.link;
   }
 
