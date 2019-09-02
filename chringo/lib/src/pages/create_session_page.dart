@@ -12,6 +12,7 @@ class CreateSessionPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            _DropdownWithLabel('Choose bingo rules:', <String>['Standard', 'Blackout']),
             _WordbankChoice(),
             RaisedButton(
               onPressed: () {},
@@ -36,14 +37,18 @@ class _DropdownWithLabelState extends State {
   final String label;
   final List<String> dropdownItems;
   String selectedItem;
-  _DropdownWithLabelState(this.label, this.dropdownItems);
+  _DropdownWithLabelState(this.label, this.dropdownItems) {
+    selectedItem = dropdownItems.first;
+  }
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(label),
         SizedBox(width: 20,),
         DropdownButton<String>(
+          value: selectedItem,
           onChanged: (newValue) {
             setState(() => selectedItem = newValue);
           },
@@ -52,7 +57,7 @@ class _DropdownWithLabelState extends State {
               value: value,
               child: Text(value),
             );
-          })
+          }).toList()
         )
       ],
     );
