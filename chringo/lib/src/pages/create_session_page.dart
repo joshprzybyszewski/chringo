@@ -24,6 +24,42 @@ class CreateSessionPage extends StatelessWidget {
   }
 }
 
+class _DropdownWithLabel extends StatefulWidget {
+  final String label;
+  final List<String> dropdownItems;
+  _DropdownWithLabel(this.label, this.dropdownItems);
+  @override
+  State<StatefulWidget> createState() => _DropdownWithLabelState(label, dropdownItems);
+}
+
+class _DropdownWithLabelState extends State {
+  final String label;
+  final List<String> dropdownItems;
+  String selectedItem;
+  _DropdownWithLabelState(this.label, this.dropdownItems);
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Text(label),
+        SizedBox(width: 20,),
+        DropdownButton<String>(
+          onChanged: (newValue) {
+            setState(() => selectedItem = newValue);
+          },
+          items: dropdownItems.map((value){
+            return DropdownMenuItem(
+              value: value,
+              child: Text(value),
+            );
+          })
+        )
+      ],
+    );
+  }
+
+}
+
 class _WordbankChoice extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _WordbankChoiceState();
