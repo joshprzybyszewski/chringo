@@ -28,7 +28,9 @@ class CreateSessionPage extends StatelessWidget {
                       builder: (context, snapshot) {
                         return _DropdownWithLabel(
                             'Choose wordbank:',
-                            snapshot.data.documents.map((doc)=>doc.documentID).toList());
+                            snapshot.data.documents
+                                .map((doc) => doc.documentID)
+                                .toList());
                       }),
                 ],
               ),
@@ -74,6 +76,7 @@ class _DropdownWithLabelState extends State {
         Container(
           width: 150,
           child: DropdownButton<String>(
+              isExpanded: true,
               value: selectedItem,
               onChanged: (newValue) {
                 setState(() => selectedItem = newValue);
