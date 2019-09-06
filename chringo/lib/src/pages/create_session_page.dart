@@ -26,11 +26,9 @@ class CreateSessionPage extends StatelessWidget {
                           .collection('wordbanks')
                           .snapshots(),
                       builder: (context, snapshot) {
-                        print(
-                            "Number of documents: ${snapshot.data.documents.length}, ${snapshot.data.documents.first.documentID}");
                         return _DropdownWithLabel(
                             'Choose wordbank:',
-                            mockWordbankNames);
+                            snapshot.data.documents.map((doc)=>doc.documentID).toList());
                       }),
                 ],
               ),
