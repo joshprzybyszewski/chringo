@@ -1,8 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class CreateSessionPage extends StatelessWidget {
+class CreateSessionPage extends StatefulWidget {
+  @override
+  _CreateSessionPageState createState() => _CreateSessionPageState();
+}
+
+class _CreateSessionPageState extends State<CreateSessionPage> {
+  String _wordbankChoice;
+
   final mockWordbankNames = <String>['Mock WB 1', 'Mock WB 2'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,8 +27,8 @@ class CreateSessionPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 // TODO figure out how to pass the dropdown choices out
                 children: <Widget>[
-                  _DropdownWithLabel(
-                      'Choose bingo rules:', <String>['Standard', 'Blackout']),
+                  _DropdownWithLabel('Choose bingo rules:',
+                      <String>['Standard', 'Blackout'], () {}),
                   StreamBuilder<QuerySnapshot>(
                       stream: Firestore.instance
                           .collection('wordbanks')
@@ -30,7 +38,9 @@ class CreateSessionPage extends StatelessWidget {
                             'Choose wordbank:',
                             snapshot.data.documents
                                 .map((doc) => doc.documentID)
-                                .toList());
+                                .toList(), (newValue) {
+                          setState(() => _wordbankChoice = newValue);
+                        });
                       }),
                 ],
               ),
@@ -38,7 +48,9 @@ class CreateSessionPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      print(_wordbankChoice);
+                    },
                     child: Text("CREATE"),
                   ),
                 ],
@@ -54,17 +66,20 @@ class CreateSessionPage extends StatelessWidget {
 class _DropdownWithLabel extends StatefulWidget {
   final String label;
   final List<String> dropdownItems;
-  _DropdownWithLabel(this.label, this.dropdownItems);
+  final Function onSelectionChanged;
+  _DropdownWithLabel(this.label, this.dropdownItems, this.onSelectionChanged);
   @override
   State<StatefulWidget> createState() =>
-      _DropdownWithLabelState(label, dropdownItems);
+      _DropdownWithLabelState(label, dropdownItems, onSelectionChanged);
 }
 
 class _DropdownWithLabelState extends State {
   final String label;
   final List<String> dropdownItems;
+  final Function onSelectionChanged;
   String selectedItem;
-  _DropdownWithLabelState(this.label, this.dropdownItems) {
+  _DropdownWithLabelState(
+      this.label, this.dropdownItems, this.onSelectionChanged) {
     selectedItem = dropdownItems.first;
   }
   @override
@@ -79,7 +94,10 @@ class _DropdownWithLabelState extends State {
               isExpanded: true,
               value: selectedItem,
               onChanged: (newValue) {
-                setState(() => selectedItem = newValue);
+                setState(() {
+                  selectedItem = newValue;
+                  onSelectionChanged(newValue);
+                });
               },
               items: dropdownItems.map((value) {
                 return DropdownMenuItem(
